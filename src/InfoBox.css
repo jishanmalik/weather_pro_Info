@@ -5,4 +5,9 @@
 .cardContainer{
     display: flex;
     justify-content: center;
+   
+}
+
+.box{
+    background-color: red;
 }

@@ -45,13 +45,13 @@ export default function InfoBox({info}){
             <AcUnitIcon/>
             )}
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }} component={"span"}>
-          <p>  Temprature = {info.temp}&deg;C </p>
-          <p>Feels Like = {info.feelsLike}&deg;C </p>
-          <p> Minimum Temprature = {info.tempMin}&deg;C </p>
-          <p> Maximum Temprature = {info.tempMax}&deg;C </p>
-          <p> Humidity = {info.humidity} </p>
-          <p>  Weather = {info.weather} </p>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }} component={"span"} className="box">
+          <h4> Temprature = {info.temp}&deg;C </h4>
+          <h4>Feels Like = {info.feelsLike}&deg;C </h4>
+          <h4> Minimum Temprature = {info.tempMin}&deg;C </h4>
+          <h4> Maximum Temprature = {info.tempMax}&deg;C </h4>
+          <h4> Humidity = {info.humidity} </h4>
+          <h4>  Weather = {info.weather} </h4>
         </Typography>
       </CardContent>
     </Card>
