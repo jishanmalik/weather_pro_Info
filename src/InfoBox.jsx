@@ -22,7 +22,7 @@ export default function InfoBox({info}){
 
     return(
         <div className="InfoBox">
-            <h1>Weather Info</h1>
+            <h1 id="heading">Weather Info</h1>
 
             <div className="cardContainer">
             <Card sx={{  width:"100%" ,maxWidth: 345 }}>
