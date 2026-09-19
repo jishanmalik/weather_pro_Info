@@ -1,12 +1,292 @@
-.InfoBox{
+.InfoBox {
     text-align: center;
-}
-.cardContainer{
-    display: flex;
-    justify-content: center;
-   
+    padding: 24px 16px;
+    position: relative;
 }
 
-.box{
-    background-color: red;
+#heading {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+    color: #1a1a2e;
+    font-size: 1.9rem;
+}
+
+.cardContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+/* ============ CARD BASE ============ */
+.weatherCard.MuiCard-root {
+    position: relative;
+    border-radius: 22px !important;
+    overflow: hidden;
+    padding: 18px 16px 20px;
+    color: #fff !important;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: cardIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: default;
+}
+
+.weatherCard.MuiCard-root:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25) !important;
+}
+
+.activeCard {
+    outline: 2px solid rgba(255, 255, 255, 0.55);
+    outline-offset: -2px;
+}
+
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ GRADIENT THEMES (forced to beat MUI's default white bg) ============ */
+.gradHot   { background: linear-gradient(160deg, #ff9a56 0%, #ff6a3d 55%, #ff4e50 100%) !important; }
+.gradMild  { background: linear-gradient(160deg, #56ccf2 0%, #2f80ed 100%) !important; }
+.gradCold  { background: linear-gradient(160deg, #4e5f8f 0%, #2c3e6b 60%, #1a2440 100%) !important; }
+.gradRain  { background: linear-gradient(160deg, #3a4a63 0%, #1f2b3e 100%) !important; }
+
+/* ============ TOP ROW ============ */
+.cardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+}
+
+.dayChip {
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(4px);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.locationRow {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.75rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* ============ HERO TEMP + ICON ============ */
+.heroRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+    margin: 6px 0 2px;
+}
+
+.heroTemp {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: flex-start;
+}
+
+.degSym {
+    font-size: 1.4rem;
+    margin-top: 4px;
+}
+
+.weatherIcon {
+    font-size: 2.6rem !important;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+}
+
+.icon-hot { animation: pulseGlow 2.2s ease-in-out infinite; color: #fff8e1; }
+.icon-mild { animation: floatIcon 3s ease-in-out infinite; color: #fff; }
+.icon-cold { animation: floatIcon 3.4s ease-in-out infinite; color: #e6f0ff; }
+.icon-rain { animation: shakeIcon 2.6s ease-in-out infinite; color: #cfd8ff; }
+
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255,255,255,0.4)); }
+    50% { transform: scale(1.12); filter: drop-shadow(0 0 14px rgba(255,255,255,0.7)); }
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes shakeIcon {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-4deg); }
+    75% { transform: rotate(4deg); }
+}
+
+.conditionText {
+    position: relative;
+    z-index: 2;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    opacity: 0.95;
+    margin-bottom: 14px;
+}
+
+/* ============ STAT CHIPS ============ */
+.statRow {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.statChip {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(4px);
+    padding: 5px 10px;
+    border-radius: 14px;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+/* ============ MIN/MAX BAR ============ */
+.minMaxRow {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.95;
+}
+
+.minMaxBar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.minMaxFill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    animation: fillBar 1s ease-out forwards;
+    transform-origin: left;
+}
+
+@keyframes fillBar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+/* ============ DECORATIVE BACKGROUND ANIMATIONS ============ */
+.decor {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.sunGlow {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+.cloud {
+    position: absolute;
+    width: 70px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 50px;
+    filter: blur(1px);
+}
+
+.c1 { top: 14%; left: -20%; animation: driftRight 9s linear infinite; }
+.c2 { top: 55%; left: -30%; width: 50px; height: 18px; animation: driftRight 13s linear infinite; animation-delay: 2s; }
+
+@keyframes driftRight {
+    from { transform: translateX(0); }
+    to { transform: translateX(340px); }
+}
+
+.drop {
+    position: absolute;
+    top: -10%;
+    width: 2px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    animation: fall 1.4s linear infinite;
+}
+
+.d1 { left: 20%; animation-delay: 0s; }
+.d2 { left: 45%; animation-delay: 0.4s; }
+.d3 { left: 65%; animation-delay: 0.8s; }
+.d4 { left: 85%; animation-delay: 0.2s; }
+
+@keyframes fall {
+    from { transform: translateY(0); opacity: 0.9; }
+    to { transform: translateY(220px); opacity: 0; }
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 600px) {
+    .cardContainer {
+        grid-template-columns: 1fr;
+        max-width: 340px;
+    }
+    .weatherCard.MuiCard-root:hover {
+        transform: none;
+    }
+    #heading {
+        font-size: 1.5rem;
+    }
+    .heroTemp {
+        font-size: 2.6rem;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .cardContainer {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 620px;
+    }
 }

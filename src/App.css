@@ -3,10 +3,16 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-
+  position: relative;
+  z-index: 1;
 }
-body{
-  background-image: url("image copy.png") ;
+
+body {
+  background-image: url("./image.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* ///background-attachment: fixed; */
 }
 
 .logo {

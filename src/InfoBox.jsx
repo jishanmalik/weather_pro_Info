@@ -1,61 +1,100 @@
 import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
-// import Button from '@mui/material/Button';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import LocationPinIcon from '@mui/icons-material/LocationPin';
-import Typography from '@mui/material/Typography';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
-import SunnyIcon from '@mui/icons-material/Sunny';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import CloudIcon from '@mui/icons-material/Cloud';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import ThermostatIcon from '@mui/icons-material/Thermostat';
 import "./InfoBox.css"
 
+export default function InfoBox({ info }) {
+    if (!info || !info.today || !info.yesterday || !info.tomorrow) return null;
 
+    const getTheme = (day) => {
+        if (day.humidity > 80) return { key: "rain", gradient: "gradRain", Icon: ThunderstormIcon };
+        if (day.temp > 28) return { key: "hot", gradient: "gradHot", Icon: WbSunnyIcon };
+        if (day.temp > 15) return { key: "mild", gradient: "gradMild", Icon: CloudIcon };
+        return { key: "cold", gradient: "gradCold", Icon: AcUnitIcon };
+    };
 
-export default function InfoBox({info}){
-    if (!info) return null;
+    const days = [
+        { key: "yesterday", label: "Yesterday", data: info.yesterday },
+        { key: "today", label: "Today", data: info.today },
+        { key: "tomorrow", label: "Tomorrow", data: info.tomorrow },
+    ];
 
-    const INIT_URL ="https://images.unsplash.com/photo-1722858343990-1604f540c15d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHVzdHklMjB3ZWF0aGVyfGVufDB8fDB8fHww";
-    const HOT_URL="https://plus.unsplash.com/premium_photo-1733306531071-087c077e1502?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8c3VubnklMjB3ZWF0aGVyfGVufDB8fDB8fHww";
-    const COLD_URL="https://images.unsplash.com/photo-1612208695882-02f2322b7fee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29sZCUyMHdlYXRoZXJ8ZW58MHx8MHx8fDA%3D";
-    const RAIN_URL="https://images.unsplash.com/photo-1493314894560-5c412a56c17c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmFpbnklMjB3ZWF0aGVyfGVufDB8fDB8fHww";
-
-    return(
+    return (
         <div className="InfoBox">
-            <h1 id="heading">Weather Info</h1>
-
+            <h1 id="heading">Weather Forecast</h1>
             <div className="cardContainer">
-            <Card sx={{  width:"100%" ,maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 160 }}
-        image={info.humidity>80?RAIN_URL:info.temp>15?HOT_URL:COLD_URL}
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-        <LocationPinIcon/> &nbsp;
-         {info.city}
-         {" "}
-         &nbsp;&nbsp;
-          {info.humidity > 80 ? (
-            <ThunderstormIcon/>
-            ) : info.temp>15?(
-            <SunnyIcon/>
-            ) : (
-            <AcUnitIcon/>
-            )}
-        </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }} component={"span"} className="box">
-          <h4> Temprature = {info.temp}&deg;C </h4>
-          <h4>Feels Like = {info.feelsLike}&deg;C </h4>
-          <h4> Minimum Temprature = {info.tempMin}&deg;C </h4>
-          <h4> Maximum Temprature = {info.tempMax}&deg;C </h4>
-          <h4> Humidity = {info.humidity} </h4>
-          <h4>  Weather = {info.weather} </h4>
-        </Typography>
-      </CardContent>
-    </Card>
-    </div>
+                {days.map((day, index) => {
+                    const theme = getTheme(day.data);
+                    const { Icon } = theme;
+                    return (
+                        <Card
+                            key={day.key}
+                            className={`weatherCard ${theme.gradient} ${day.label === "Today" ? "activeCard" : ""}`}
+                            style={{ animationDelay: `${index * 0.12}s` }}
+                            elevation={0}
+                        >
+                            <div className="decor">
+                                {theme.key === "rain" && (
+                                    <>
+                                        <span className="drop d1" />
+                                        <span className="drop d2" />
+                                        <span className="drop d3" />
+                                        <span className="drop d4" />
+                                    </>
+                                )}
+                                {theme.key === "hot" && <div className="sunGlow" />}
+                                {(theme.key === "mild" || theme.key === "cold") && (
+                                    <>
+                                        <span className="cloud c1" />
+                                        <span className="cloud c2" />
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="cardTop">
+                                <span className="dayChip">{day.label}</span>
+                                <span className="locationRow">
+                                    <LocationPinIcon fontSize="inherit" /> {day.data.city}
+                                </span>
+                            </div>
+
+                            <div className="heroRow">
+                                <Icon className={`weatherIcon icon-${theme.key}`} />
+                                <div className="heroTemp">
+                                    {day.data.temp}
+                                    <span className="degSym">&deg;</span>
+                                </div>
+                            </div>
+
+                            <div className="conditionText">{day.data.weather}</div>
+
+                            <div className="statRow">
+                                <div className="statChip">
+                                    <ThermostatIcon fontSize="inherit" />
+                                    <span>Feels {day.data.feelsLike}&deg;</span>
+                                </div>
+                                <div className="statChip">
+                                    <WaterDropIcon fontSize="inherit" />
+                                    <span>{day.data.humidity}%</span>
+                                </div>
+                            </div>
+
+                            <div className="minMaxRow">
+                                <span className="minMaxItem">↓ {day.data.tempMin}&deg;</span>
+                                <div className="minMaxBar">
+                                    <div className="minMaxFill" style={{ left: "10%", width: "80%" }} />
+                                </div>
+                                <span className="minMaxItem">↑ {day.data.tempMax}&deg;</span>
+                            </div>
+                        </Card>
+                    );
+                })}
+            </div>
         </div>
     );
 }

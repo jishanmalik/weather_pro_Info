@@ -1,3 +1,76 @@
-.SearchBox{
+.SearchBox {
     text-align: center;
+    padding: 20px 16px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.SearchBox h3 {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    letter-spacing: 0.3px;
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cityInput {
+    flex: 1;
+    min-width: 200px;
+}
+
+.cityInput .MuiOutlinedInput-root {
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+.cityInput .MuiOutlinedInput-root:hover fieldset {
+    border-color: #6c63ff;
+}
+
+.cityInput .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #6c63ff;
+    border-width: 2px;
+}
+
+.searchBtn {
+    border-radius: 10px !important;
+    padding: 8px 22px !important;
+    background: rgb(88, 106, 133) !important;
+    box-shadow: 0 4px 14px rgba(108, 99, 255, 0.35) !important;
+    text-transform: none !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    min-width: 130px;
+}
+
+.searchBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(240, 227, 110, 0.45) !important;
+}
+
+.searchBtn:disabled {
+    opacity: 0.7;
+}
+
+.errorText {
+    color: #d32f2f;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
 }
